@@ -44,7 +44,7 @@ export default function Layout({ children }) {
       
       {/* Main Content */}
       <main className="ig-main-content pt-16 lg:pt-0 pb-16 lg:pb-0">
-        <div className="lg:px-8 py-6">
+        <div className="py-6">
           {children}
         </div>
       </main>

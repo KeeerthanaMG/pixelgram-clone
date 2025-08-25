@@ -97,6 +97,16 @@ function appReducer(state, action) {
         )
       };
     
+    case 'TOGGLE_SAVE':
+      return {
+        ...state,
+        posts: state.posts.map(post =>
+          post.id === action.postId
+            ? { ...post, isSaved: !post.isSaved }
+            : post
+        )
+      };
+    
     default:
       return state;
   }

@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Search, Heart, MessageCircle, PlusSquare, User } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
+import MobileMenu from './MobileMenu';
 
 export default function Navbar() {
   const location = useLocation();
@@ -20,10 +21,10 @@ export default function Navbar() {
           Instagram
         </Link>
         
-        <div className="flex items-center space-x-6">
-          <button className="relative">
-            <Search className="w-6 h-6" />
-          </button>
+        <div className="flex items-center space-x-4">
+          <Link to="/search" className="relative">
+            <Search className={`w-6 h-6 ${location.pathname === '/search' ? 'text-primary' : ''}`} />
+          </Link>
           
           <Link to="/notifications" className="relative">
             <Heart className={`w-6 h-6 ${location.pathname === '/notifications' ? 'fill-current text-primary' : ''}`} />
@@ -45,6 +46,8 @@ export default function Navbar() {
           <Link to="/profile">
             <User className={`w-6 h-6 ${location.pathname === '/profile' ? 'fill-current text-primary' : ''}`} />
           </Link>
+          
+          <MobileMenu />
         </div>
       </div>
     </header>

@@ -8,9 +8,9 @@ export default function Home() {
   const { posts } = state;
 
   return (
-    <div className="flex">
+    <div className="flex max-w-screen-lg mx-auto px-4 lg:px-8">
       {/* Main Feed */}
-      <div className="flex-1 max-w-[470px] mx-auto lg:mx-0 lg:ml-8">
+      <div className="flex-1 max-w-[470px] mx-auto lg:mx-0">
         <div className="space-y-6">
           <Stories />
           
@@ -31,7 +31,7 @@ export default function Home() {
       </div>
 
       {/* Right Sidebar - Suggestions */}
-      <aside className="hidden lg:block w-[319px] ml-8 sticky top-6 h-fit">
+      <aside className="hidden lg:block w-[319px] ml-16 sticky top-6 h-fit">
         <div className="space-y-6">
           {/* Current User Card */}
           <div className="bg-background rounded-lg border border-border p-4">

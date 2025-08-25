@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { Heart, MessageCircle, Send, Bookmark, MoreHorizontal } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
+import ShareModal from './ShareModal';
 
 export default function Post({ post }) {
   const { dispatch } = useAppContext();
   const [comment, setComment] = useState('');
+  const [showComments, setShowComments] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
   
   const handleLike = () => {
     dispatch({ type: 'TOGGLE_LIKE', postId: post.id });
@@ -25,6 +28,14 @@ export default function Post({ post }) {
       });
       setComment('');
     }
+  };
+
+  const handleSave = () => {
+    dispatch({ type: 'TOGGLE_SAVE', postId: post.id });
+  };
+
+  const handleShare = () => {
+    setShowShareModal(true);
   };
 
   return (
@@ -78,14 +89,23 @@ export default function Post({ post }) {
                 }`} 
               />
             </button>
-            <button className="p-1 hover:scale-110 transition-transform">
+            <button 
+              onClick={() => setShowComments(!showComments)}
+              className="p-1 hover:scale-110 transition-transform"
+            >
               <MessageCircle className="w-6 h-6" />
             </button>
-            <button className="p-1 hover:scale-110 transition-transform">
+            <button 
+              onClick={handleShare}
+              className="p-1 hover:scale-110 transition-transform"
+            >
               <Send className="w-6 h-6" />
             </button>
           </div>
-          <button className="p-1 hover:scale-110 transition-transform">
+          <button 
+            onClick={handleSave}
+            className="p-1 hover:scale-110 transition-transform"
+          >
             <Bookmark className={`w-6 h-6 ${post.isSaved ? 'fill-current' : ''}`} />
           </button>
         </div>
@@ -104,17 +124,28 @@ export default function Post({ post }) {
         {/* Comments */}
         {post.comments.length > 0 && (
           <div className="space-y-1 mb-2">
-            {post.comments.length > 2 && (
-              <button className="text-sm text-muted-foreground">
+            {post.comments.length > 2 && !showComments && (
+              <button 
+                onClick={() => setShowComments(true)}
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
                 View all {post.comments.length} comments
               </button>
             )}
-            {post.comments.slice(-2).map((comment) => (
+            {(showComments ? post.comments : post.comments.slice(-2)).map((comment) => (
               <div key={comment.id} className="text-sm">
                 <span className="font-semibold mr-2">{comment.user.username}</span>
                 <span>{comment.text}</span>
               </div>
             ))}
+            {showComments && post.comments.length > 2 && (
+              <button 
+                onClick={() => setShowComments(false)}
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
+                Show less
+              </button>
+            )}
           </div>
         )}
 
@@ -139,6 +170,13 @@ export default function Post({ post }) {
           )}
         </form>
       </div>
+
+      {/* Share Modal */}
+      <ShareModal 
+        post={post}
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+      />
     </article>
   );
 }
