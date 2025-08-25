@@ -2,41 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Instagram-inspired design system with beautiful gradients and animations */
 
 @layer base {
   :root {
+    /* Instagram Color Palette */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 0%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Instagram Blue */
+    --primary: 210 100% 48%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Light Gray */
+    --secondary: 0 0% 97%;
+    --secondary-foreground: 0 0% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Medium Gray */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent Blue */
+    --accent: 210 100% 48%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Red for likes/delete */
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Borders - Instagram style */
+    --border: 0 0% 86%;
+    --input: 0 0% 91%;
+    --ring: 210 100% 48%;
 
-    --radius: 0.5rem;
+    --radius: 8px;
+
+    /* Instagram specific colors */
+    --ig-blue: 210 100% 48%;
+    --ig-light-blue: 210 100% 85%;
+    --ig-gray: 0 0% 45%;
+    --ig-light-gray: 0 0% 96%;
+    --ig-border: 0 0% 86%;
+    --ig-red: 0 100% 50%;
+    
+    /* Gradients */
+    --gradient-story: linear-gradient(45deg, hsl(320 100% 50%), hsl(45 100% 50%), hsl(210 100% 48%));
+    --gradient-button: linear-gradient(135deg, hsl(210 100% 48%), hsl(210 100% 42%));
+    --gradient-overlay: linear-gradient(0deg, hsl(0 0% 0% / 0.6), transparent);
+
+    /* Shadows */
+    --shadow-soft: 0 1px 3px hsl(0 0% 0% / 0.1);
+    --shadow-medium: 0 4px 12px hsl(0 0% 0% / 0.15);
+    --shadow-strong: 0 8px 24px hsl(0 0% 0% / 0.25);
+
+    /* Transitions */
+    --transition-fast: all 0.15s ease;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Spacing for Instagram layout */
+    --sidebar-width: 244px;
+    --content-max-width: 470px;
+    --suggestions-width: 319px;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +132,173 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+  /* Instagram Layout Components */
+  .ig-container {
+    @apply max-w-screen-xl mx-auto;
+  }
+
+  .ig-sidebar {
+    @apply fixed top-0 left-0 h-screen w-[244px] border-r border-border bg-background z-40;
+  }
+
+  .ig-main-content {
+    @apply ml-0 lg:ml-[244px] min-h-screen;
+  }
+
+  .ig-feed-container {
+    @apply max-w-[470px] mx-auto px-4;
+  }
+
+  /* Instagram Post Styles */
+  .ig-post {
+    @apply bg-card border border-border rounded-lg mb-6 shadow-[var(--shadow-soft)];
+  }
+
+  .ig-avatar {
+    @apply rounded-full border-2 border-transparent bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-0.5;
+  }
+
+  .ig-avatar-inner {
+    @apply rounded-full bg-background p-0.5;
+  }
+
+  /* Story Ring Animation */
+  .ig-story-ring {
+    @apply relative rounded-full p-0.5 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600;
+  }
+
+  .ig-story-ring::before {
+    content: '';
+    @apply absolute inset-0 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 animate-pulse;
+  }
+
+  /* Button Variants */
+  .ig-btn-primary {
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-4 py-2 rounded-lg transition-all duration-200;
+  }
+
+  .ig-btn-secondary {
+    @apply bg-secondary hover:bg-secondary/80 text-secondary-foreground font-medium px-4 py-2 rounded-lg transition-all duration-200;
+  }
+
+  .ig-btn-ghost {
+    @apply hover:bg-muted text-foreground font-medium px-4 py-2 rounded-lg transition-all duration-200;
+  }
+
+  /* Mobile Navigation */
+  .ig-mobile-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-background border-t border-border z-50 lg:hidden;
+  }
+
+  /* Responsive Hide/Show */
+  .ig-desktop-only {
+    @apply hidden lg:block;
+  }
+
+  .ig-mobile-only {
+    @apply block lg:hidden;
+  }
+
+  /* Animations */
+  .ig-fade-in {
+    @apply animate-in fade-in duration-300;
+  }
+
+  .ig-scale-in {
+    @apply animate-in zoom-in duration-200;
+  }
+
+  .ig-slide-up {
+    @apply animate-in slide-in-from-bottom duration-300;
+  }
+}
+
+@layer utilities {
+  /* Custom scrollbar for Instagram-like feel */
+  .ig-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .ig-scrollbar::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  .ig-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground));
+    border-radius: 2px;
+  }
+
+  .ig-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--foreground));
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Grid utilities for responsive posts */
+  .ig-grid-posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  @screen sm {
+    .ig-grid-posts {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+  }
+
+  @screen lg {
+    .ig-grid-posts {
+      grid-template-columns: repeat(auto-fill, minmax(293px, 1fr));
+    }
+  }
+
+  /* Text utilities */
+  .ig-text-gradient {
+    background: var(--gradient-story);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Animation utilities */
+  .animate-in {
+    animation-fill-mode: both;
+  }
+
+  .fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+
+  .zoom-in {
+    animation: scale-in 0.2s ease-out;
+  }
+
+  .slide-in-from-bottom {
+    animation: slide-in-from-bottom 0.3s ease-out;
+  }
+
+  @keyframes slide-in-from-bottom {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 }
