@@ -27,16 +27,16 @@ export default function Sidebar() {
 
   return (
     <aside className="ig-sidebar ig-desktop-only">
-      <div className="flex flex-col h-full py-6 px-3">
+      <div className="flex flex-col h-full py-8 px-3">
         {/* Logo */}
-        <div className="px-3 mb-8">
+        <div className="px-3 mb-10">
           <Link to="/" className="text-2xl font-bold ig-text-gradient">
             Instagram
           </Link>
         </div>
         
         {/* Navigation */}
-        <nav className="flex-1 space-y-1">
+        <nav className="flex-1 space-y-2">
           {navigation.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.href);
@@ -47,18 +47,22 @@ export default function Sidebar() {
                 to={item.href}
                 onClick={item.onClick}
                 className={`
-                  flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors relative
+                  flex items-center px-3 py-3 text-base font-normal rounded-xl transition-all duration-200 relative group
                   ${active 
-                    ? 'bg-primary/10 text-primary font-semibold' 
-                    : 'text-foreground hover:bg-muted'
+                    ? 'bg-gray-100 font-bold' 
+                    : 'hover:bg-gray-50'
                   }
                 `}
               >
-                <Icon className={`w-6 h-6 mr-3 ${active ? 'fill-current' : ''}`} />
-                <span>{item.name}</span>
+                <Icon className={`w-7 h-7 mr-4 transition-transform group-hover:scale-105 ${
+                  active ? 'stroke-2' : 'stroke-1.5'
+                } ${
+                  item.name === 'Notifications' && item.badge > 0 ? 'text-red-500' : ''
+                }`} />
+                <span className={active ? 'font-bold' : 'font-normal'}>{item.name}</span>
                 
                 {item.badge > 0 && (
-                  <span className="ml-auto bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="ml-auto bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
                     {item.badge}
                   </span>
                 )}
@@ -68,42 +72,42 @@ export default function Sidebar() {
         </nav>
         
         {/* Bottom Menu */}
-        <div className="space-y-1">
+        <div className="space-y-2 mb-6">
           <Link
             to="/settings"
             className={`
-              flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors
+              flex items-center px-3 py-3 text-base font-normal rounded-xl transition-all duration-200 group
               ${isActive('/settings') 
-                ? 'bg-primary/10 text-primary font-semibold' 
-                : 'text-foreground hover:bg-muted'
+                ? 'bg-gray-100 font-bold' 
+                : 'hover:bg-gray-50'
               }
             `}
           >
-            <Settings className="w-6 h-6 mr-3" />
-            <span>Settings</span>
+            <Settings className={`w-7 h-7 mr-4 transition-transform group-hover:scale-105 ${
+              isActive('/settings') ? 'stroke-2' : 'stroke-1.5'
+            }`} />
+            <span className={isActive('/settings') ? 'font-bold' : 'font-normal'}>Settings</span>
           </Link>
           
-          <button className="flex items-center w-full px-3 py-3 text-sm font-medium rounded-lg transition-colors text-foreground hover:bg-muted">
-            <Menu className="w-6 h-6 mr-3" />
+          <button className="flex items-center w-full px-3 py-3 text-base font-normal rounded-xl transition-all duration-200 hover:bg-gray-50 group">
+            <Menu className="w-7 h-7 mr-4 transition-transform group-hover:scale-105 stroke-1.5" />
             <span>More</span>
           </button>
           
           {/* User Profile */}
-          <div className="flex items-center px-3 py-3 mt-4 border-t border-border">
-            <div className="ig-avatar w-8 h-8 mr-3">
-              <div className="ig-avatar-inner">
-                <img
-                  src={currentUser.avatar}
-                  alt={currentUser.username}
-                  className="w-full h-full rounded-full object-cover"
-                />
-              </div>
+          <div className="flex items-center px-3 py-4 border-t border-gray-200">
+            <div className="w-10 h-10 mr-3">
+              <img
+                src={currentUser.avatar}
+                alt={currentUser.username}
+                className="w-full h-full rounded-full object-cover"
+              />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-foreground truncate">
+              <p className="text-sm font-semibold text-foreground truncate">
                 {currentUser.username}
               </p>
-              <p className="text-xs text-muted-foreground truncate">
+              <p className="text-xs text-gray-500 truncate">
                 {currentUser.fullName}
               </p>
             </div>
