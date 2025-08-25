@@ -5,14 +5,9 @@ import { useAppContext } from '../context/AppContext';
 export default function Post({ post }) {
   const { dispatch } = useAppContext();
   const [comment, setComment] = useState('');
-  const [showComments, setShowComments] = useState(false);
   
   const handleLike = () => {
     dispatch({ type: 'TOGGLE_LIKE', postId: post.id });
-  };
-
-  const handleSave = () => {
-    dispatch({ type: 'TOGGLE_SAVE', postId: post.id });
   };
 
   const handleComment = (e) => {
@@ -33,26 +28,28 @@ export default function Post({ post }) {
   };
 
   return (
-    <article className="bg-white border border-gray-200 rounded-lg mb-4">
+    <article className="ig-post">
       {/* Post Header */}
-      <div className="flex items-center justify-between p-3">
+      <div className="flex items-center justify-between p-4">
         <div className="flex items-center">
-          <div className="w-8 h-8 mr-3">
-            <img
-              src={post.user.avatar}
-              alt={post.user.username}
-              className="w-full h-full rounded-full object-cover"
-            />
+          <div className="ig-avatar w-8 h-8 mr-3">
+            <div className="ig-avatar-inner">
+              <img
+                src={post.user.avatar}
+                alt={post.user.username}
+                className="w-full h-full rounded-full object-cover"
+              />
+            </div>
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-semibold">{post.user.username}</span>
             {post.location && (
-              <span className="text-xs text-gray-500">{post.location}</span>
+              <span className="text-xs text-muted-foreground">{post.location}</span>
             )}
           </div>
         </div>
-        <button className="p-2 hover:bg-gray-50 rounded-full transition-colors">
-          <MoreHorizontal className="w-4 h-4" />
+        <button className="p-2 hover:bg-muted rounded-full transition-colors">
+          <MoreHorizontal className="w-5 h-5" />
         </button>
       </div>
 
@@ -66,33 +63,30 @@ export default function Post({ post }) {
       </div>
 
       {/* Post Actions */}
-      <div className="px-3 pt-3">
+      <div className="p-4">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-4">
             <button 
               onClick={handleLike}
-              className={`transition-transform hover:scale-110 ${
+              className={`p-1 transition-transform hover:scale-110 ${
                 post.isLiked ? 'animate-bounce-heart' : ''
               }`}
             >
               <Heart 
                 className={`w-6 h-6 ${
-                  post.isLiked ? 'fill-red-500 text-red-500' : 'hover:text-gray-500'
+                  post.isLiked ? 'fill-red-500 text-red-500' : ''
                 }`} 
               />
             </button>
-            <button className="hover:scale-110 transition-transform hover:text-gray-500">
+            <button className="p-1 hover:scale-110 transition-transform">
               <MessageCircle className="w-6 h-6" />
             </button>
-            <button className="hover:scale-110 transition-transform hover:text-gray-500">
+            <button className="p-1 hover:scale-110 transition-transform">
               <Send className="w-6 h-6" />
             </button>
           </div>
-          <button className="hover:scale-110 transition-transform hover:text-gray-500">
-            <Bookmark 
-              onClick={handleSave}
-              className={`w-6 h-6 ${post.isSaved ? 'fill-black' : ''}`} 
-            />
+          <button className="p-1 hover:scale-110 transition-transform">
+            <Bookmark className={`w-6 h-6 ${post.isSaved ? 'fill-current' : ''}`} />
           </button>
         </div>
 
@@ -111,7 +105,7 @@ export default function Post({ post }) {
         {post.comments.length > 0 && (
           <div className="space-y-1 mb-2">
             {post.comments.length > 2 && (
-              <button className="text-sm text-gray-500">
+              <button className="text-sm text-muted-foreground">
                 View all {post.comments.length} comments
               </button>
             )}
@@ -125,26 +119,26 @@ export default function Post({ post }) {
         )}
 
         {/* Timestamp */}
-        <div className="text-xs text-gray-500 mb-3">
+        <div className="text-xs text-muted-foreground mb-3">
           {post.timestamp} ago
         </div>
-      </div>
 
-      {/* Add Comment */}
-      <form onSubmit={handleComment} className="flex items-center border-t border-gray-200 px-3 py-3">
-        <input
-          type="text"
-          placeholder="Add a comment..."
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          className="flex-1 text-sm bg-transparent border-none outline-none placeholder:text-gray-400"
-        />
-        {comment.trim() && (
-          <button type="submit" className="text-blue-500 text-sm font-semibold ml-2 hover:text-blue-700">
-            Post
-          </button>
-        )}
-      </form>
+        {/* Add Comment */}
+        <form onSubmit={handleComment} className="flex items-center border-t border-border pt-3">
+          <input
+            type="text"
+            placeholder="Add a comment..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            className="flex-1 text-sm bg-transparent border-none outline-none placeholder:text-muted-foreground"
+          />
+          {comment.trim() && (
+            <button type="submit" className="text-primary text-sm font-semibold ml-2">
+              Post
+            </button>
+          )}
+        </form>
+      </div>
     </article>
   );
 }

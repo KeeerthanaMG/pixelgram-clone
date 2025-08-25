@@ -8,9 +8,9 @@ export default function Home() {
   const { posts } = state;
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex">
       {/* Main Feed */}
-      <div className="flex-1 max-w-[470px] mx-auto pt-8 px-4">
+      <div className="flex-1 max-w-[470px] mx-auto lg:mx-0 lg:ml-8">
         <div className="space-y-6">
           <Stories />
           
@@ -31,23 +31,25 @@ export default function Home() {
       </div>
 
       {/* Right Sidebar - Suggestions */}
-      <aside className="hidden xl:block w-[319px] pt-8 pr-4 sticky top-0 h-screen overflow-y-auto">
+      <aside className="hidden lg:block w-[319px] ml-8 sticky top-6 h-fit">
         <div className="space-y-6">
           {/* Current User Card */}
-          <div className="bg-background rounded-lg p-4">
+          <div className="bg-background rounded-lg border border-border p-4">
             <div className="flex items-center">
-              <div className="w-14 h-14 mr-4">
-                <img
-                  src={state.currentUser.avatar}
-                  alt={state.currentUser.username}
-                  className="w-full h-full rounded-full object-cover"
-                />
+              <div className="ig-avatar w-14 h-14 mr-4">
+                <div className="ig-avatar-inner">
+                  <img
+                    src={state.currentUser.avatar}
+                    alt={state.currentUser.username}
+                    className="w-full h-full rounded-full object-cover"
+                  />
+                </div>
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-sm">{state.currentUser.username}</h3>
-                <p className="text-sm text-gray-500">{state.currentUser.fullName}</p>
+                <h3 className="font-semibold">{state.currentUser.username}</h3>
+                <p className="text-sm text-muted-foreground">{state.currentUser.fullName}</p>
               </div>
-              <button className="text-blue-500 text-xs font-semibold">
+              <button className="text-primary text-sm font-semibold">
                 Switch
               </button>
             </div>

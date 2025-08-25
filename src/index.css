@@ -143,11 +143,11 @@
   }
 
   .ig-sidebar {
-    @apply fixed top-0 left-0 h-screen w-[244px] border-r border-border bg-background z-40 overflow-y-auto scrollbar-hide;
+    @apply fixed top-0 left-0 h-screen w-[244px] border-r border-border bg-background z-40;
   }
 
   .ig-main-content {
-    @apply ml-[244px] min-h-screen;
+    @apply ml-0 lg:ml-[244px] min-h-screen;
   }
 
   .ig-feed-container {
