@@ -35,18 +35,16 @@ export default function Layout({ children }) {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Desktop Sidebar */}
+    <div className="min-h-screen bg-background flex">
+      {/* Desktop Sidebar - Fixed Left */}
       <Sidebar />
       
       {/* Mobile Top Navbar */}
       <Navbar />
       
-      {/* Main Content */}
-      <main className="ig-main-content pt-16 lg:pt-0 pb-16 lg:pb-0">
-        <div className="py-6">
-          {children}
-        </div>
+      {/* Main Content Area */}
+      <main className="flex-1 lg:ml-[244px] pt-16 lg:pt-0 pb-16 lg:pb-0 min-h-screen">
+        {children}
       </main>
       
       {/* Mobile Bottom Navigation */}
