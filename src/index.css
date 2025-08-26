@@ -143,8 +143,7 @@
   }
 
   .ig-sidebar {
-    @apply fixed top-0 left-0 h-full w-[245px] border-r border-border bg-background z-50;
-    position: fixed !important;
+    @apply fixed top-0 left-0 h-screen w-[244px] border-r border-border bg-background z-40;
   }
 
   .ig-main-content {

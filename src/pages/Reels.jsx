@@ -84,7 +84,7 @@ export default function Reels() {
   };
 
   return (
-    <div className="relative h-screen bg-black overflow-hidden -m-6 lg:-m-8">
+    <div className="relative h-screen bg-black overflow-hidden">
       {/* Reels Container */}
       <div 
         className="h-full overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
@@ -94,7 +94,7 @@ export default function Reels() {
         {reels.map((reel, index) => (
           <div key={reel.id} className="relative h-screen snap-start flex items-center justify-center">
             {/* Video/Image Background */}
-            <div className="relative w-full max-w-[380px] mx-auto h-full bg-black rounded-none overflow-hidden">
+            <div className="relative w-full max-w-[380px] mx-auto h-full bg-black rounded-lg overflow-hidden">
               {/* Media Content */}
               <img
                 src={reel.thumbnail}
@@ -104,7 +104,7 @@ export default function Reels() {
               
               {/* Play/Pause Overlay */}
               <div 
-                className="absolute inset-0 flex items-center justify-center cursor-pointer bg-black/5"
+                className="absolute inset-0 flex items-center justify-center cursor-pointer bg-black/10"
                 onClick={togglePlay}
               >
                 {!playing && (
@@ -117,7 +117,7 @@ export default function Reels() {
               {/* Volume Control */}
               <button 
                 onClick={toggleMute}
-                className="absolute top-6 right-6 p-3 bg-black/50 rounded-full backdrop-blur-sm hover:bg-black/70 transition-colors"
+                className="absolute top-4 right-4 p-2 bg-black/50 rounded-full backdrop-blur-sm hover:bg-black/70 transition-colors"
               >
                 {muted ? (
                   <VolumeX className="w-5 h-5 text-white" />
@@ -127,22 +127,22 @@ export default function Reels() {
               </button>
 
               {/* User Info Overlay */}
-              <div className="absolute bottom-0 left-0 right-20 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 mr-3">
+              <div className="absolute bottom-0 left-0 right-16 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                <div className="flex items-center mb-3">
+                  <div className="w-8 h-8 mr-3">
                     <img
                       src={reel.user.avatar}
                       alt={reel.user.username}
-                      className="w-full h-full rounded-full object-cover border-2 border-white/30"
+                      className="w-full h-full rounded-full object-cover border-2 border-white/20"
                     />
                   </div>
-                  <span className="font-semibold text-base text-white">{reel.user.username}</span>
-                  <button className="ml-4 text-sm font-semibold border border-white/60 px-4 py-1.5 rounded-md hover:bg-white hover:text-black transition-all duration-200 text-white">
+                  <span className="font-semibold text-sm text-white">{reel.user.username}</span>
+                  <button className="ml-3 text-sm font-semibold border border-white/60 px-4 py-1 rounded-md hover:bg-white hover:text-black transition-all duration-200 text-white">
                     Follow
                   </button>
                 </div>
                 
-                <p className="text-sm mb-4 leading-relaxed text-white/90 max-w-sm">{reel.caption}</p>
+                <p className="text-sm mb-3 leading-relaxed text-white/90">{reel.caption}</p>
                 
                 <div className="flex items-center text-xs text-white/80">
                   <Music className="w-4 h-4 mr-2" />
@@ -151,7 +151,7 @@ export default function Reels() {
               </div>
 
               {/* Right Actions */}
-              <div className="absolute bottom-24 right-4 flex flex-col items-center space-y-6">
+              <div className="absolute bottom-20 right-4 flex flex-col items-center space-y-6">
                 <button 
                   onClick={() => handleLike(reel.id)}
                   className="flex flex-col items-center group"
@@ -214,7 +214,7 @@ export default function Reels() {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="fixed right-8 top-1/2 transform -translate-y-1/2 flex flex-col space-y-2 z-20">
+      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 flex flex-col space-y-2 z-20">
         {reels.map((_, index) => (
           <div
             key={index}
