@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
+import Navbar from './Navbar';
 import BottomNav from './BottomNav';
 import UploadModal from './UploadModal';
 
@@ -24,12 +25,12 @@ export default function Layout({ children }) {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex">
       {/* Fixed Left Sidebar for all pages */}
       <Sidebar />
       
-      {/* Main Content Area - properly offset from fixed sidebar */}
-      <main className="ml-0 lg:ml-[250px] min-h-screen">
+      {/* Main Content Area */}
+      <main className="flex-1 ml-0 lg:ml-[245px] min-h-screen">
         {children}
       </main>
       

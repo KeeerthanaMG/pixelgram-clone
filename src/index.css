@@ -66,7 +66,7 @@
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     /* Spacing for Instagram layout */
-    --sidebar-width: 250px;
+    --sidebar-width: 244px;
     --content-max-width: 470px;
     --suggestions-width: 319px;
 
@@ -143,11 +143,11 @@
   }
 
   .ig-sidebar {
-    @apply fixed top-0 left-0 h-screen w-[250px] border-r border-border bg-background z-40;
+    @apply fixed top-0 left-0 h-screen w-[244px] border-r border-border bg-background z-40;
   }
 
   .ig-main-content {
-    @apply ml-0 lg:ml-[250px] min-h-screen;
+    @apply ml-0 lg:ml-[244px] min-h-screen;
   }
 
   .ig-feed-container {
