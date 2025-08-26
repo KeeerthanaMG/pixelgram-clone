@@ -29,13 +29,8 @@ export default function Layout({ children }) {
       {/* Fixed Left Sidebar for all pages */}
       <Sidebar />
       
-      {/* Mobile Top Navbar - only show on mobile */}
-      <div className="lg:hidden">
-        <Navbar />
-      </div>
-      
       {/* Main Content Area */}
-      <main className="flex-1 ml-0 lg:ml-[245px] pt-16 lg:pt-0 pb-16 lg:pb-0 min-h-screen">
+      <main className="flex-1 ml-0 lg:ml-[245px] min-h-screen">
         {children}
       </main>
       

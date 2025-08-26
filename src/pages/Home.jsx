@@ -8,7 +8,7 @@ export default function Home() {
   const { posts } = state;
 
   return (
-    <div className="flex max-w-screen-lg mx-auto px-4 lg:px-6 py-6">
+    <div className="flex max-w-screen-lg mx-auto px-4 lg:px-6 py-6 lg:py-8">
       {/* Main Feed */}
       <div className="flex-1 max-w-[470px] mx-auto lg:mx-0">
         <div className="space-y-8">
