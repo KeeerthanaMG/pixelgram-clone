@@ -17,7 +17,7 @@ export default function Profile() {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto px-4">
+    <div className="max-w-4xl mx-auto">{/* */}
       {/* Profile Header */}
       <div className="flex flex-col lg:flex-row items-start lg:items-center py-8 border-b border-border">
         <div className="flex-shrink-0 mb-6 lg:mb-0 lg:mr-12">
