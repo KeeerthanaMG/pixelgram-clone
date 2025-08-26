@@ -28,10 +28,23 @@ export default function Sidebar() {
   return (
     <aside className="ig-sidebar ig-desktop-only">
       <div className="flex flex-col h-full py-6 px-3">
-        {/* Logo */}
-        <div className="px-4 mb-10">
-          <Link to="/" className="text-2xl font-bold ig-text-gradient hover:opacity-80 transition-opacity">
-            Instagram
+        {/* Instagram Icon/Logo */}
+        <div className="px-4 mb-8">
+          <Link to="/" className="flex items-center group hover:opacity-80 transition-opacity">
+            <div className="text-2xl font-bold ig-text-gradient">
+              <svg width="103" height="29" viewBox="0 0 103 29" fill="none" className="w-24 h-7">
+                <path d="M7.965 0.245C3.654 0.245 0.162 3.737 0.162 8.048V20.952C0.162 25.263 3.654 28.755 7.965 28.755H20.869C25.18 28.755 28.672 25.263 28.672 20.952V8.048C28.672 3.737 25.18 0.245 20.869 0.245H7.965Z" fill="url(#paint0_linear)"/>
+                <path d="M14.417 7.583C10.851 7.583 7.958 10.476 7.958 14.042C7.958 17.608 10.851 20.501 14.417 20.501C17.983 20.501 20.876 17.608 20.876 14.042C20.876 10.476 17.983 7.583 14.417 7.583ZM14.417 18.292C12.071 18.292 10.167 16.388 10.167 14.042C10.167 11.696 12.071 9.792 14.417 9.792C16.763 9.792 18.667 11.696 18.667 14.042C18.667 16.388 16.763 18.292 14.417 18.292Z" fill="white"/>
+                <circle cx="21.458" cy="7.583" r="1.375" fill="white"/>
+                <defs>
+                  <linearGradient id="paint0_linear" x1="2.917" y1="26" x2="26.917" y2="2" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#FD5949"/>
+                    <stop offset="0.5" stopColor="#D6249F"/>
+                    <stop offset="1" stopColor="#285AEB"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
           </Link>
         </div>
         

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Heart, MessageCircle, Send, Bookmark, MoreHorizontal, Volume2, VolumeX, Play } from 'lucide-react';
+import { Heart, MessageCircle, Send, Bookmark, MoreHorizontal, Volume2, VolumeX, Play, Music } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 
 export default function Reels() {
@@ -20,7 +20,8 @@ export default function Reels() {
       likes: 2847,
       comments: 156,
       music: 'Adventure Vibes • Original Audio',
-      isLiked: false
+      isLiked: false,
+      isSaved: false
     },
     {
       id: 2,
@@ -31,7 +32,8 @@ export default function Reels() {
       likes: 1923,
       comments: 89,
       music: 'Workout Mix • Trending',
-      isLiked: true
+      isLiked: true,
+      isSaved: false
     },
     {
       id: 3,
@@ -42,13 +44,24 @@ export default function Reels() {
       likes: 3456,
       comments: 234,
       music: 'Chill Vibes • Popular',
-      isLiked: false
+      isLiked: false,
+      isSaved: true
     }
   ];
 
   const handleLike = (reelId) => {
-    // In real app, this would update the reel's like status
     console.log('Liked reel:', reelId);
+    // Here you would update the reel's like status
+  };
+
+  const handleSave = (reelId) => {
+    console.log('Saved reel:', reelId);
+    // Here you would update the reel's save status
+  };
+
+  const handleShare = (reelId) => {
+    console.log('Share reel:', reelId);
+    dispatch({ type: 'OPEN_SHARE_MODAL', payload: { postId: reelId, type: 'reel' } });
   };
 
   const handleScroll = (e) => {
@@ -57,7 +70,7 @@ export default function Reels() {
     const scrollTop = container.scrollTop;
     const newCurrentReel = Math.round(scrollTop / reelHeight);
     
-    if (newCurrentReel !== currentReel) {
+    if (newCurrentReel !== currentReel && newCurrentReel >= 0 && newCurrentReel < reels.length) {
       setCurrentReel(newCurrentReel);
     }
   };
@@ -70,17 +83,6 @@ export default function Reels() {
     setMuted(!muted);
   };
 
-  useEffect(() => {
-    // Auto-scroll to next reel functionality could be added here
-    const interval = setInterval(() => {
-      if (playing && currentReel < reels.length - 1) {
-        // Auto advance logic could go here
-      }
-    }, 15000); // 15 seconds per reel
-
-    return () => clearInterval(interval);
-  }, [currentReel, playing, reels.length]);
-
   return (
     <div className="relative h-screen bg-black overflow-hidden">
       {/* Reels Container */}
@@ -92,8 +94,8 @@ export default function Reels() {
         {reels.map((reel, index) => (
           <div key={reel.id} className="relative h-screen snap-start flex items-center justify-center">
             {/* Video/Image Background */}
-            <div className="relative w-full max-w-sm mx-auto h-full bg-black">
-              {/* For demo, using image instead of video */}
+            <div className="relative w-full max-w-[380px] mx-auto h-full bg-black rounded-lg overflow-hidden">
+              {/* Media Content */}
               <img
                 src={reel.thumbnail}
                 alt={reel.caption}
@@ -102,40 +104,48 @@ export default function Reels() {
               
               {/* Play/Pause Overlay */}
               <div 
-                className="absolute inset-0 flex items-center justify-center cursor-pointer"
+                className="absolute inset-0 flex items-center justify-center cursor-pointer bg-black/10"
                 onClick={togglePlay}
               >
                 {!playing && (
-                  <div className="bg-black/50 rounded-full p-4">
-                    <Play className="w-12 h-12 text-white fill-current" />
+                  <div className="bg-black/60 rounded-full p-6 backdrop-blur-sm">
+                    <Play className="w-12 h-12 text-white fill-current ml-1" />
                   </div>
                 )}
               </div>
 
+              {/* Volume Control */}
+              <button 
+                onClick={toggleMute}
+                className="absolute top-4 right-4 p-2 bg-black/50 rounded-full backdrop-blur-sm hover:bg-black/70 transition-colors"
+              >
+                {muted ? (
+                  <VolumeX className="w-5 h-5 text-white" />
+                ) : (
+                  <Volume2 className="w-5 h-5 text-white" />
+                )}
+              </button>
+
               {/* User Info Overlay */}
-              <div className="absolute bottom-20 left-4 right-20 text-white">
+              <div className="absolute bottom-0 left-0 right-16 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
                 <div className="flex items-center mb-3">
-                  <div className="ig-avatar w-8 h-8 mr-3">
-                    <div className="ig-avatar-inner">
-                      <img
-                        src={reel.user.avatar}
-                        alt={reel.user.username}
-                        className="w-full h-full rounded-full object-cover"
-                      />
-                    </div>
+                  <div className="w-8 h-8 mr-3">
+                    <img
+                      src={reel.user.avatar}
+                      alt={reel.user.username}
+                      className="w-full h-full rounded-full object-cover border-2 border-white/20"
+                    />
                   </div>
-                  <span className="font-semibold text-sm">{reel.user.username}</span>
-                  <button className="ml-3 text-sm font-semibold border border-white px-3 py-1 rounded hover:bg-white hover:text-black transition-colors">
+                  <span className="font-semibold text-sm text-white">{reel.user.username}</span>
+                  <button className="ml-3 text-sm font-semibold border border-white/60 px-4 py-1 rounded-md hover:bg-white hover:text-black transition-all duration-200 text-white">
                     Follow
                   </button>
                 </div>
                 
-                <p className="text-sm mb-2 leading-relaxed">{reel.caption}</p>
+                <p className="text-sm mb-3 leading-relaxed text-white/90">{reel.caption}</p>
                 
-                <div className="flex items-center text-xs">
-                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-                  </svg>
+                <div className="flex items-center text-xs text-white/80">
+                  <Music className="w-4 h-4 mr-2" />
                   <span>{reel.music}</span>
                 </div>
               </div>
@@ -144,11 +154,11 @@ export default function Reels() {
               <div className="absolute bottom-20 right-4 flex flex-col items-center space-y-6">
                 <button 
                   onClick={() => handleLike(reel.id)}
-                  className="flex flex-col items-center"
+                  className="flex flex-col items-center group"
                 >
-                  <div className="p-3 bg-black/30 rounded-full">
+                  <div className="p-3 bg-black/40 rounded-full backdrop-blur-sm hover:bg-black/60 transition-colors">
                     <Heart 
-                      className={`w-7 h-7 text-white ${reel.isLiked ? 'fill-red-500 text-red-500' : ''}`} 
+                      className={`w-7 h-7 ${reel.isLiked ? 'fill-red-500 text-red-500' : 'text-white'} group-hover:scale-110 transition-transform`} 
                     />
                   </div>
                   <span className="text-white text-xs font-semibold mt-1">
@@ -156,70 +166,63 @@ export default function Reels() {
                   </span>
                 </button>
 
-                <button className="flex flex-col items-center">
-                  <div className="p-3 bg-black/30 rounded-full">
-                    <MessageCircle className="w-7 h-7 text-white" />
+                <button className="flex flex-col items-center group">
+                  <div className="p-3 bg-black/40 rounded-full backdrop-blur-sm hover:bg-black/60 transition-colors">
+                    <MessageCircle className="w-7 h-7 text-white group-hover:scale-110 transition-transform" />
                   </div>
                   <span className="text-white text-xs font-semibold mt-1">
                     {reel.comments}
                   </span>
                 </button>
 
-                <button className="flex flex-col items-center">
-                  <div className="p-3 bg-black/30 rounded-full">
-                    <Send className="w-7 h-7 text-white" />
+                <button 
+                  onClick={() => handleShare(reel.id)}
+                  className="flex flex-col items-center group"
+                >
+                  <div className="p-3 bg-black/40 rounded-full backdrop-blur-sm hover:bg-black/60 transition-colors">
+                    <Send className="w-7 h-7 text-white group-hover:scale-110 transition-transform" />
                   </div>
                 </button>
 
-                <button className="flex flex-col items-center">
-                  <div className="p-3 bg-black/30 rounded-full">
-                    <Bookmark className="w-7 h-7 text-white" />
+                <button 
+                  onClick={() => handleSave(reel.id)}
+                  className="flex flex-col items-center group"
+                >
+                  <div className="p-3 bg-black/40 rounded-full backdrop-blur-sm hover:bg-black/60 transition-colors">
+                    <Bookmark className={`w-7 h-7 ${reel.isSaved ? 'fill-white text-white' : 'text-white'} group-hover:scale-110 transition-transform`} />
                   </div>
                 </button>
 
-                <button className="flex flex-col items-center">
-                  <div className="p-3 bg-black/30 rounded-full">
-                    <MoreHorizontal className="w-7 h-7 text-white" />
+                <button className="flex flex-col items-center group">
+                  <div className="p-3 bg-black/40 rounded-full backdrop-blur-sm hover:bg-black/60 transition-colors">
+                    <MoreHorizontal className="w-7 h-7 text-white group-hover:scale-110 transition-transform" />
                   </div>
                 </button>
+
+                {/* Profile Picture for Music */}
+                <div className="w-12 h-12 rounded-full border-2 border-white/30 overflow-hidden animate-spin-slow">
+                  <img
+                    src={reel.user.avatar}
+                    alt="Music"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
-
-              {/* Volume Control */}
-              <button 
-                onClick={toggleMute}
-                className="absolute top-4 right-4 p-2 bg-black/30 rounded-full"
-              >
-                {muted ? (
-                  <VolumeX className="w-5 h-5 text-white" />
-                ) : (
-                  <Volume2 className="w-5 h-5 text-white" />
-                )}
-              </button>
             </div>
           </div>
         ))}
       </div>
 
       {/* Scroll Indicator */}
-      <div className="fixed right-2 top-1/2 transform -translate-y-1/2 flex flex-col space-y-1">
+      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 flex flex-col space-y-2 z-20">
         {reels.map((_, index) => (
           <div
             key={index}
-            className={`w-1 h-6 rounded-full transition-colors ${
-              index === currentReel ? 'bg-white' : 'bg-white/30'
+            className={`w-1 h-8 rounded-full transition-all duration-300 ${
+              index === currentReel ? 'bg-white shadow-lg' : 'bg-white/40'
             }`}
           />
         ))}
-      </div>
-
-      {/* Top Navigation */}
-      <div className="fixed top-0 left-0 right-0 z-10 flex items-center justify-between p-4">
-        <h1 className="text-white text-xl font-semibold">Reels</h1>
-        <button className="text-white p-2">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-          </svg>
-        </button>
       </div>
     </div>
   );
