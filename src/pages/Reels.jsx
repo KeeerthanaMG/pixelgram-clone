@@ -84,7 +84,7 @@ export default function Reels() {
   };
 
   return (
-    <div className="relative h-screen bg-black overflow-hidden">
+    <div className="relative h-screen bg-black overflow-hidden w-full">
       {/* Reels Container */}
       <div 
         className="h-full overflow-y-scroll snap-y snap-mandatory scrollbar-hide"

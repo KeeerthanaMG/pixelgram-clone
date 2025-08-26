@@ -18,7 +18,7 @@ export default function Messages() {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-background">
       {/* Conversations List */}
       <div className={`w-full lg:w-96 border-r border-border bg-background ${selectedChat ? 'hidden lg:block' : 'block'}`}>
         <div className="p-4 border-b border-border">
