@@ -25,12 +25,12 @@ export default function Layout({ children }) {
   }
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background">
       {/* Fixed Left Sidebar for all pages */}
       <Sidebar />
       
       {/* Main Content Area */}
-      <main className="flex-1 ml-0 lg:ml-[245px] min-h-screen">
+      <main className="ml-0 lg:ml-[250px] min-h-screen">
         {children}
       </main>
       
